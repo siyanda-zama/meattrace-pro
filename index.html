@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>MeatTrace Pro — Food Safety & Yield Management</title>
     <meta name="description" content="MeatTrace Pro: The digital backbone for meat operations. HACCP compliance, cold chain monitoring, and yield analytics for South African abattoirs." />
     <meta name="author" content="Siyanda & Azanda Zama" />
@@ -16,7 +16,9 @@
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192.svg" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.svg" />
+    <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512.svg" />
 
     <!-- PWA -->
     <meta name="theme-color" content="#0D1F3C" />
@@ -28,13 +30,83 @@
 
     <style>
       /* Critical CSS — prevent FOUC */
-      body { margin: 0; background: #F2F4F7; font-family: 'Inter', system-ui, sans-serif; }
+      body {
+        margin: 0;
+        background: #F2F4F7;
+        font-family: 'Inter', system-ui, sans-serif;
+        /* Safe area insets for iPhone notch/home indicator */
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+      }
       #root { min-height: 100vh; }
+
+      /* Splash screen */
+      #splash {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #0D1F3C;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.3s ease-out;
+      }
+      #splash.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #splash-logo {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 24px;
+        animation: pulse 2s ease-in-out infinite;
+      }
+      #splash-text {
+        color: #B8962E;
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.05); opacity: 0.8; }
+      }
     </style>
   </head>
 
   <body>
+    <!-- Splash Screen -->
+    <div id="splash">
+      <svg id="splash-logo" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
+        <rect width="192" height="192" rx="40" fill="#0D1F3C"/>
+        <path d="M96 32L152 64V128L96 160L40 128V64L96 32Z" fill="#B8962E" opacity="0.15"/>
+        <path d="M96 48L140 72V120L96 144L52 120V72L96 48Z" fill="#B8962E" opacity="0.1"/>
+        <path d="M96 56L132 76V116L96 136L60 116V76L96 56Z" stroke="#B8962E" stroke-width="2" fill="none"/>
+        <path d="M80 80L96 68L112 80V112L96 124L80 112V80Z" fill="#B8962E"/>
+        <path d="M88 88L96 82L104 88V104L96 110L88 104V88Z" fill="#0D1F3C"/>
+      </svg>
+      <div id="splash-text">MeatTrace Pro</div>
+    </div>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Hide splash screen after load -->
+    <script>
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.getElementById('splash').classList.add('hidden');
+          setTimeout(() => {
+            document.getElementById('splash').remove();
+          }, 300);
+        }, 800);
+      });
+    </script>
   </body>
 </html>

@@ -45,7 +45,7 @@ const Auditor = () => {
           </div>
         }
       />
-      <div className="px-8 py-6 space-y-5">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-5">
         {/* Encrypted access notice */}
         <div className="flex items-center gap-2 p-3 rounded-lg text-xs" style={{ background: 'hsl(var(--mt-surface-2))', color: 'hsl(var(--mt-text-secondary))' }}>
           <Lock className="w-4 h-4 shrink-0" style={{ color: 'hsl(var(--mt-gold))' }} />
@@ -53,7 +53,7 @@ const Auditor = () => {
         </div>
 
         {/* Certification readiness */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {standards.map((std, i) => (
             <motion.div key={std.name} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} className="card-section p-5">
               <div className="flex items-start justify-between mb-3">
@@ -82,7 +82,7 @@ const Auditor = () => {
         </div>
 
         {/* Search */}
-        <div className="relative max-w-sm">
+        <div className="relative max-w-full md:max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(var(--mt-text-muted))' }} />
           <Input placeholder="Search by session ID or date..." value={search} onChange={e => setSearch(e.target.value)} className="pl-9 h-10" style={{ borderRadius: 'var(--mt-radius-sm)' }} />
         </div>

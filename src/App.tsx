@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,6 +11,19 @@ import Login from "./pages/Login";
 import { AdminLayout } from "./components/dashboard/AdminLayout";
 import { MobileLayout } from "./components/mobile/MobileLayout";
 import { PageSkeleton } from "./components/dashboard/PageSkeleton";
+
+// Route persistence - remember last page
+function RouteListener() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname !== "/login" && location.pathname !== "/") {
+      localStorage.setItem("lastRoute", location.pathname);
+    }
+  }, [location]);
+
+  return null;
+}
 
 // Lazy load all pages for route-level code splitting
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -57,6 +70,21 @@ const App = () => {
     );
   }
 
+  // Redirect to last route after login
+  const getDefaultRoute = () => {
+    if (isAuthenticated) {
+      const lastRoute = localStorage.getItem("lastRoute");
+      if (lastRoute && lastRoute !== "/login" && lastRoute !== "/") {
+        return lastRoute;
+      }
+      // Default routes by role
+      if (user?.role === "AUDITOR") return "/auditor";
+      if (user?.role === "OPERATOR") return "/app";
+      return "/dashboard";
+    }
+    return "/login";
+  };
+
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
       <QueryClientProvider client={queryClient}>
@@ -64,8 +92,9 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
+          <RouteListener />
           <Routes>
-            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="/" element={<Navigate to={getDefaultRoute()} replace />} />
             <Route path="/login" element={<Login />} />
 
             {/* Admin Dashboard */}
