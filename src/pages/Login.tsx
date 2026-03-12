@@ -30,7 +30,13 @@ const Login = () => {
     const result = await login(email, password);
     if (result.success) {
       const user = useAuthStore.getState().user;
-      if (user?.role === "OPERATOR") {
+      // Get last route or default by role
+      const lastRoute = localStorage.getItem("lastRoute");
+      if (lastRoute && lastRoute !== "/login" && lastRoute !== "/") {
+        navigate(lastRoute);
+      } else if (user?.role === "AUDITOR") {
+        navigate("/auditor");
+      } else if (user?.role === "OPERATOR") {
         navigate("/app");
       } else {
         navigate("/dashboard");
@@ -38,6 +44,32 @@ const Login = () => {
     } else {
       setError(result.error || "Login failed");
     }
+  };
+
+  const handleDemoLogin = async (email: string, password: string) => {
+    setEmail(email);
+    setPassword(password);
+    setError("");
+
+    // Small delay to show the filled form
+    setTimeout(async () => {
+      const result = await login(email, password);
+      if (result.success) {
+        const user = useAuthStore.getState().user;
+        const lastRoute = localStorage.getItem("lastRoute");
+        if (lastRoute && lastRoute !== "/login" && lastRoute !== "/") {
+          navigate(lastRoute);
+        } else if (user?.role === "AUDITOR") {
+          navigate("/auditor");
+        } else if (user?.role === "OPERATOR") {
+          navigate("/app");
+        } else {
+          navigate("/dashboard");
+        }
+      } else {
+        setError(result.error || "Login failed");
+      }
+    }, 100);
   };
 
   return (
@@ -160,11 +192,9 @@ const Login = () => {
                 <button
                   key={cred.label}
                   type="button"
-                  onClick={() => {
-                    setEmail(cred.email);
-                    setPassword(cred.label + "@123");
-                  }}
-                  className="text-xs px-3 py-2 font-medium transition-colors"
+                  onClick={() => handleDemoLogin(cred.email, cred.label + "@123")}
+                  disabled={isLoading}
+                  className="text-xs px-3 py-2 font-medium transition-colors hover:opacity-80"
                   style={{
                     borderRadius: 'var(--mt-radius-sm)',
                     background: 'hsl(var(--mt-surface-1))',

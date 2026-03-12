@@ -49,33 +49,62 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: #0D1F3C;
+        background: linear-gradient(135deg, #0D1F3C 0%, #1a2f4a 100%);
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         z-index: 9999;
-        transition: opacity 0.3s ease-out;
+        transition: opacity 0.4s ease-out, transform 0.4s ease-out;
       }
       #splash.hidden {
         opacity: 0;
+        transform: scale(0.95);
         pointer-events: none;
       }
       #splash-logo {
         width: 120px;
         height: 120px;
         margin-bottom: 24px;
-        animation: pulse 2s ease-in-out infinite;
+        animation: logoFloat 3s ease-in-out infinite;
+        filter: drop-shadow(0 10px 30px rgba(184, 150, 46, 0.3));
+      }
+      #splash-logo path:nth-child(4) {
+        animation: logoGlow 2s ease-in-out infinite;
       }
       #splash-text {
         color: #B8962E;
         font-size: 24px;
         font-weight: 600;
         letter-spacing: -0.02em;
+        animation: textFade 2s ease-in-out infinite;
+        text-shadow: 0 2px 20px rgba(184, 150, 46, 0.4);
       }
-      @keyframes pulse {
-        0%, 100% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.05); opacity: 0.8; }
+      @keyframes logoFloat {
+        0%, 100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(2deg);
+        }
+      }
+      @keyframes logoGlow {
+        0%, 100% {
+          opacity: 1;
+          fill: #B8962E;
+        }
+        50% {
+          opacity: 0.7;
+          fill: #d4a837;
+        }
+      }
+      @keyframes textFade {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
       }
     </style>
   </head>
