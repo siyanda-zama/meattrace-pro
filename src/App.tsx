@@ -54,6 +54,8 @@ function SuspenseWrap({ children }: { children: React.ReactNode }) {
 const App = () => {
   const initialize = useAuthStore((state) => state.initialize);
   const isLoading = useAuthStore((state) => state.isLoading);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     initialize();
