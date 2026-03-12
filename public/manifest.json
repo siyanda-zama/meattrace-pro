@@ -1,0 +1,26 @@
+{
+  "name": "MeatTrace Pro",
+  "short_name": "MeatTrace",
+  "description": "Food Safety & Yield Management for South African Abattoirs",
+  "start_url": "/app",
+  "display": "standalone",
+  "theme_color": "#0D1F3C",
+  "background_color": "#0D1F3C",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "en-ZA"
+}
