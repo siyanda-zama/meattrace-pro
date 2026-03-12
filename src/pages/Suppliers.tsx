@@ -84,8 +84,8 @@ const Suppliers = () => {
           </div>
         }
       />
-      <div className="px-8 py-6 space-y-5">
-        <div className="relative max-w-sm">
+      <div className="px-4 md:px-8 py-4 md:py-6 space-y-5">
+        <div className="relative max-w-full md:max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(var(--mt-text-muted))' }} />
           <Input placeholder="Search by name, CIPC, or province..." value={search} onChange={e => setSearch(e.target.value)} className="pl-9 h-10" style={{ borderRadius: 'var(--mt-radius-sm)' }} />
         </div>

@@ -1,6 +1,7 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AdminSidebar } from "./AdminSidebar";
+import { MobileBottomNav } from "./MobileBottomNav";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { Bell } from "lucide-react";
 import { ALERTS } from "@/lib/mock-data";
@@ -16,18 +17,22 @@ export function AdminLayout() {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
-        <AdminSidebar />
+        {/* Desktop Sidebar - hidden on mobile */}
+        <div className="hidden md:block">
+          <AdminSidebar />
+        </div>
+
         <div className="flex-1 flex flex-col min-w-0">
           {/* Top bar */}
           <header
-            className="h-14 flex items-center justify-between px-8"
+            className="h-14 flex items-center justify-between px-4 md:px-8"
             style={{
               background: 'hsl(var(--mt-surface-0))',
               borderBottom: '1px solid hsl(var(--mt-border))',
             }}
           >
             <div className="flex items-center gap-3">
-              <SidebarTrigger />
+              <SidebarTrigger className="md:inline" />
               <span className="mt-data-sm hidden sm:inline">
                 {new Date().toLocaleDateString("en-ZA", {
                   weekday: "long", year: "numeric", month: "long", day: "numeric",
@@ -53,19 +58,22 @@ export function AdminLayout() {
                 className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
                 style={{ background: 'hsl(var(--mt-gold))', color: 'hsl(var(--mt-navy))' }}
               >
-                {user?.name?.charAt(0)}
+                {user?.name?.charAt(0) || 'U'}
               </div>
             </div>
           </header>
 
-          {/* Content area */}
+          {/* Content area - add bottom padding on mobile for bottom nav */}
           <main
-            className="flex-1 overflow-auto"
+            className="flex-1 overflow-auto pb-16 md:pb-0"
             style={{ background: 'hsl(var(--mt-surface-1))' }}
           >
             <Outlet />
           </main>
         </div>
+
+        {/* Mobile Bottom Navigation */}
+        <MobileBottomNav />
       </div>
     </SidebarProvider>
   );
