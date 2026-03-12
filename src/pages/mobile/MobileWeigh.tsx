@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Bluetooth, Loader2, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const MobileWeigh = () => {
@@ -13,7 +12,6 @@ const MobileWeigh = () => {
     setTimeout(() => {
       setBleState("connected");
       setWeight(342.6);
-      // Simulate fluctuation
       const interval = setInterval(() => {
         setWeight((w) => +(w + (Math.random() - 0.5) * 0.8).toFixed(1));
       }, 2000);
@@ -26,26 +24,40 @@ const MobileWeigh = () => {
 
   return (
     <div className="space-y-5">
-      <div>
-        <h1 className="text-lg font-bold">CDM Scale Entry</h1>
-        <p className="text-sm text-muted-foreground">Weigh carcass and log CDM</p>
+      {/* Status header */}
+      <div className="flex items-center justify-between">
+        <span className="font-mono text-sm font-medium" style={{ color: 'hsl(42, 64%, 45%)' }}>CDM Scale</span>
+        <div className="flex items-center gap-2">
+          {bleState === "connected" ? (
+            <span className="badge-pass">Connected</span>
+          ) : (
+            <span className="badge-pending">Disconnected</span>
+          )}
+        </div>
       </div>
 
       {/* BLE Connection */}
-      <div className="bg-card rounded-lg p-4 shadow-card">
+      <div
+        className="p-4 rounded-xl"
+        style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.10)' }}
+      >
         {bleState === "disconnected" && (
-          <Button onClick={connectScale} variant="outline" className="w-full h-12 gap-2">
+          <button
+            onClick={connectScale}
+            className="w-full h-12 flex items-center justify-center gap-2 rounded-xl text-sm font-medium"
+            style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.10)' }}
+          >
             <Bluetooth className="w-4 h-4" /> Connect Scale
-          </Button>
+          </button>
         )}
         {bleState === "connecting" && (
-          <div className="flex items-center justify-center gap-2 h-12 text-accent">
+          <div className="flex items-center justify-center gap-2 h-12" style={{ color: 'hsl(42, 64%, 45%)' }}>
             <Loader2 className="w-5 h-5 animate-spin" />
             <span className="text-sm font-medium">Pairing...</span>
           </div>
         )}
         {bleState === "connected" && (
-          <div className="flex items-center gap-2 text-success">
+          <div className="flex items-center gap-2" style={{ color: 'hsl(142, 72%, 37%)' }}>
             <CheckCircle2 className="w-5 h-5" />
             <span className="text-sm font-medium">Scale Connected</span>
           </div>
@@ -56,34 +68,51 @@ const MobileWeigh = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="bg-primary rounded-lg p-6 text-center shadow-card"
+        className="p-8 rounded-xl text-center"
+        style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.10)' }}
       >
-        <p className="text-xs text-primary-foreground/60 uppercase tracking-wider">CDM Weight</p>
-        <p className="text-5xl font-bold font-mono text-primary-foreground mt-2">
+        <p className="text-[11px] uppercase tracking-[0.09em]" style={{ color: 'rgba(255,255,255,0.4)' }}>CDM Weight</p>
+        <p className="font-mono text-[56px] font-medium text-white leading-none mt-2">
           {weight > 0 ? weight.toFixed(1) : "—"}
         </p>
-        <p className="text-sm text-primary-foreground/60 mt-1">kg</p>
+        <p className="text-base mt-1" style={{ color: 'rgba(255,255,255,0.5)' }}>kg</p>
       </motion.div>
 
-      {/* Manual Entry */}
+      {/* Data fields */}
       <div className="space-y-3">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Live Weight (kg)</label>
-          <Input type="number" defaultValue={liveWeight} className="h-12 text-base font-mono" />
+        <div className="space-y-1.5">
+          <label className="text-[11px] uppercase tracking-[0.09em] block" style={{ color: 'rgba(255,255,255,0.4)' }}>Live Weight (kg)</label>
+          <Input
+            type="number"
+            defaultValue={liveWeight}
+            className="h-12 text-base font-mono border-0"
+            style={{ background: 'rgba(255,255,255,0.07)', color: 'white', borderRadius: 'var(--mt-radius-md)' }}
+          />
         </div>
-        <div className="bg-secondary rounded-lg p-4 flex items-center justify-between">
-          <span className="text-sm font-medium">Dressing %</span>
-          <span className="text-xl font-bold font-mono">{dressingPct}%</span>
+        <div
+          className="p-4 rounded-xl flex items-center justify-between"
+          style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.10)' }}
+        >
+          <span className="text-sm font-medium text-white">Dressing %</span>
+          <span className="font-mono text-xl font-medium text-white">{dressingPct}%</span>
         </div>
-        <div className="bg-accent/10 rounded-lg p-4 flex items-center justify-between">
-          <span className="text-sm font-medium">Payout Estimate</span>
-          <span className="text-xl font-bold font-mono text-accent">R {weight > 0 ? (weight * 55).toFixed(0) : "—"}</span>
+        <div
+          className="p-4 rounded-xl flex items-center justify-between"
+          style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.10)' }}
+        >
+          <span className="text-sm font-medium text-white">Payout Estimate</span>
+          <span className="font-mono text-xl font-medium" style={{ color: 'hsl(42, 64%, 45%)' }}>
+            R {weight > 0 ? (weight * 55).toFixed(0) : "—"}
+          </span>
         </div>
       </div>
 
-      <Button className="w-full h-12 bg-accent text-accent-foreground hover:bg-accent/90 text-base font-semibold shadow-gold">
+      <button
+        className="w-full h-[52px] rounded-xl text-[15px] font-semibold text-white"
+        style={{ background: 'hsl(42, 64%, 45%)' }}
+      >
         Save Weight
-      </Button>
+      </button>
     </div>
   );
 };

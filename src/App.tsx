@@ -6,7 +6,15 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import ComingSoon from "./pages/ComingSoon";
+import Sessions from "./pages/Sessions";
+import Intake from "./pages/Intake";
+import HACCP from "./pages/HACCP";
+import Yield from "./pages/Yield";
+import ColdChain from "./pages/ColdChain";
+import Auditor from "./pages/Auditor";
+import Suppliers from "./pages/Suppliers";
+import Reports from "./pages/Reports";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
 import { AdminLayout } from "./components/dashboard/AdminLayout";
@@ -34,15 +42,15 @@ const App = () => (
           {/* Admin Dashboard */}
           <Route element={<AdminLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/sessions" element={<ComingSoon />} />
-            <Route path="/intake" element={<ComingSoon />} />
-            <Route path="/haccp" element={<ComingSoon />} />
-            <Route path="/yield" element={<ComingSoon />} />
-            <Route path="/cold-chain" element={<ComingSoon />} />
-            <Route path="/auditor" element={<ComingSoon />} />
-            <Route path="/suppliers" element={<ComingSoon />} />
-            <Route path="/reports" element={<ComingSoon />} />
-            <Route path="/settings" element={<ComingSoon />} />
+            <Route path="/sessions" element={<Sessions />} />
+            <Route path="/intake" element={<Intake />} />
+            <Route path="/haccp" element={<HACCP />} />
+            <Route path="/yield" element={<Yield />} />
+            <Route path="/cold-chain" element={<ColdChain />} />
+            <Route path="/auditor" element={<Auditor />} />
+            <Route path="/suppliers" element={<Suppliers />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
 
           {/* Mobile PWA */}

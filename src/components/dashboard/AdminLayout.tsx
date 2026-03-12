@@ -3,7 +3,6 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AdminSidebar } from "./AdminSidebar";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { Bell } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { ALERTS } from "@/lib/mock-data";
 
 export function AdminLayout() {
@@ -19,28 +18,51 @@ export function AdminLayout() {
       <div className="min-h-screen flex w-full">
         <AdminSidebar />
         <div className="flex-1 flex flex-col min-w-0">
-          <header className="h-14 flex items-center justify-between border-b border-border bg-card px-4">
-            <div className="flex items-center gap-2">
+          {/* Top bar */}
+          <header
+            className="h-14 flex items-center justify-between px-8"
+            style={{
+              background: 'hsl(var(--mt-surface-0))',
+              borderBottom: '1px solid hsl(var(--mt-border))',
+            }}
+          >
+            <div className="flex items-center gap-3">
               <SidebarTrigger />
-              <span className="text-sm text-muted-foreground hidden sm:inline">
-                {new Date().toLocaleDateString("en-ZA", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+              <span className="mt-data-sm hidden sm:inline">
+                {new Date().toLocaleDateString("en-ZA", {
+                  weekday: "long", year: "numeric", month: "long", day: "numeric",
+                })}
               </span>
             </div>
             <div className="flex items-center gap-3">
-              <button className="relative p-2 rounded-md hover:bg-secondary transition-colors">
-                <Bell className="w-4 h-4 text-muted-foreground" />
+              <button
+                className="relative p-2 rounded-md transition-colors"
+                style={{ color: 'hsl(var(--mt-text-muted))' }}
+              >
+                <Bell className="w-4 h-4" />
                 {unresolvedAlerts > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px] bg-destructive text-destructive-foreground">
+                  <span
+                    className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
+                    style={{ background: 'hsl(var(--mt-alert))' }}
+                  >
                     {unresolvedAlerts}
-                  </Badge>
+                  </span>
                 )}
               </button>
-              <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-xs font-bold text-accent-foreground">
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+                style={{ background: 'hsl(var(--mt-gold))', color: 'hsl(var(--mt-navy))' }}
+              >
                 {user?.name?.charAt(0)}
               </div>
             </div>
           </header>
-          <main className="flex-1 p-6 overflow-auto bg-background">
+
+          {/* Content area */}
+          <main
+            className="flex-1 overflow-auto"
+            style={{ background: 'hsl(var(--mt-surface-1))' }}
+          >
             <Outlet />
           </main>
         </div>

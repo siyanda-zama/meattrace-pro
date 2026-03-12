@@ -5,10 +5,10 @@ import { useAuthStore } from "@/lib/stores/auth-store";
 import { SESSIONS } from "@/lib/mock-data";
 
 const ACTIONS = [
-  { icon: ClipboardList, label: "Start Intake", path: "/app/intake", color: "bg-accent text-accent-foreground" },
-  { icon: ShieldCheck, label: "Log CCP", path: "/app/haccp", color: "bg-success text-success-foreground" },
-  { icon: Weight, label: "Weigh Animal", path: "/app/weigh", color: "bg-primary text-primary-foreground" },
-  { icon: Package, label: "By-Products", path: "/app/byproducts", color: "bg-warning text-warning-foreground" },
+  { icon: ClipboardList, label: "Start Intake", path: "/app/intake" },
+  { icon: ShieldCheck, label: "Log CCP", path: "/app/haccp" },
+  { icon: Weight, label: "Weigh Animal", path: "/app/weigh" },
+  { icon: Package, label: "By-Products", path: "/app/byproducts" },
 ];
 
 const MobileHome = () => {
@@ -18,29 +18,42 @@ const MobileHome = () => {
 
   return (
     <div className="space-y-5">
-      <div>
-        <h1 className="text-lg font-bold">Hey, {user?.name?.split(" ")[0]} 👋</h1>
-        <p className="text-sm text-muted-foreground">Floor operations dashboard</p>
-      </div>
+      {/* Session status header */}
+      {activeSession && (
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-sm font-medium" style={{ color: 'hsl(42, 64%, 45%)' }}>
+            {activeSession.id}
+          </span>
+          <div className="flex items-center gap-2">
+            <span className="badge-live">Live</span>
+            <span className="w-2 h-2 rounded-full" style={{ background: 'hsl(142, 72%, 37%)' }} />
+          </div>
+        </div>
+      )}
 
-      {/* Active Session */}
+      {/* Active Session Card */}
       {activeSession && (
         <motion.div
           initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="rounded-lg bg-accent p-4 shadow-gold"
+          className="p-5 rounded-xl"
+          style={{
+            background: 'rgba(255,255,255,0.07)',
+            border: '1px solid rgba(255,255,255,0.10)',
+          }}
         >
-          <p className="text-xs font-medium text-accent-foreground/70 uppercase tracking-wider">Active Session</p>
-          <p className="text-lg font-bold text-accent-foreground font-mono mt-1">{activeSession.id}</p>
-          <div className="flex items-center gap-4 mt-2 text-xs text-accent-foreground/80">
+          <p className="text-[11px] font-medium uppercase tracking-[0.09em]" style={{ color: 'hsl(42, 64%, 45%)' }}>
+            Active Session
+          </p>
+          <p className="font-mono text-2xl font-medium text-white mt-1">{activeSession.id}</p>
+          <div className="flex items-center gap-4 mt-2 text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
             <span>{activeSession.animalCount} animals</span>
             <span>Step {activeSession.step}/5</span>
           </div>
-          {/* Progress */}
-          <div className="mt-3 h-1.5 rounded-full bg-accent-foreground/20">
+          <div className="mt-3 h-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.1)' }}>
             <div
-              className="h-full rounded-full bg-accent-foreground transition-all"
-              style={{ width: `${(activeSession.step / 5) * 100}%` }}
+              className="h-full rounded-full transition-all"
+              style={{ width: `${(activeSession.step / 5) * 100}%`, background: 'hsl(42, 64%, 45%)' }}
             />
           </div>
         </motion.div>
@@ -55,22 +68,32 @@ const MobileHome = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
             onClick={() => navigate(action.path)}
-            className={`${action.color} rounded-lg p-5 text-left shadow-card active:scale-[0.98] transition-transform`}
+            className="p-5 rounded-xl text-left active:scale-[0.98] transition-transform"
+            style={{
+              background: 'rgba(255,255,255,0.07)',
+              border: '1px solid rgba(255,255,255,0.10)',
+            }}
           >
-            <action.icon className="w-6 h-6 mb-3" />
-            <span className="text-sm font-semibold">{action.label}</span>
+            <action.icon className="w-6 h-6 mb-3" style={{ color: 'hsl(42, 64%, 45%)' }} />
+            <span className="text-sm font-semibold text-white">{action.label}</span>
           </motion.button>
         ))}
       </div>
 
       {/* Sync Status */}
-      <div className="bg-card rounded-lg p-4 shadow-card">
+      <div
+        className="p-4 rounded-xl"
+        style={{
+          background: 'rgba(255,255,255,0.07)',
+          border: '1px solid rgba(255,255,255,0.10)',
+        }}
+      >
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs text-muted-foreground">Pending Sync</p>
-            <p className="text-lg font-bold font-mono">0 records</p>
+            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>Pending Sync</p>
+            <p className="font-mono text-lg font-medium text-white">0 records</p>
           </div>
-          <div className="text-xs text-muted-foreground">Last sync: just now</div>
+          <div className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>Last sync: just now</div>
         </div>
       </div>
     </div>
