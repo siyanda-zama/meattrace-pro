@@ -14,7 +14,7 @@ import {
 const stagger = {
   initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
-  transition: (i: number) => ({ duration: 0.35, delay: i * 0.08, ease: [0.25, 0.1, 0.25, 1] }),
+  transition: (i: number) => ({ duration: 0.35, delay: i * 0.08, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] }),
 };
 
 const statusBadge: Record<string, string> = {
