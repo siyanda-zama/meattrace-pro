@@ -1,8 +1,29 @@
 # MeatTrace Pro
 
+> **Week 2 of the App-a-Week Challenge**
+> *Built by Siyanda & Azanda Zama*
+
 **The Digital Backbone for Meat Operations**
 
 Enterprise-grade food safety and yield management platform built for South African mobile abattoirs and meat processing facilities.
+
+---
+
+## 📖 The Story
+
+After the success of Week 1, Siyanda and Azanda Zama tackled Week 2 of their ambitious **App-a-Week Challenge** with **MeatTrace Pro** — a mission-critical platform addressing real gaps in South Africa's meat processing industry.
+
+**The Challenge:** Small-to-medium mobile abattoirs in rural South Africa lack accessible technology to meet strict food safety regulations (HACCP), track yield efficiency, and maintain cold chain compliance.
+
+**The Solution:** A full-stack, production-ready system built in 7 days featuring:
+- Real-time HACCP compliance monitoring with automated deviation logging
+- IoT sensor integration for cold chain temperature tracking
+- Supplier performance analytics and yield optimization
+- Mobile-first Progressive Web App for on-site operations
+- Offline-first architecture for areas with poor connectivity
+- Enterprise-grade Supabase backend with Row Level Security
+
+**The Result:** A cloud-deployed platform with role-based access control, responsive mobile/desktop interfaces, and real-time data synchronization — ready for immediate deployment.
 
 ---
 

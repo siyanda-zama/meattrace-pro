@@ -1,5 +1,5 @@
 import { Outlet, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { Home, ClipboardList, ShieldCheck, Weight, Package, RefreshCw } from "lucide-react";
+import { Home, ClipboardList, ShieldCheck, Weight, Package, LogOut } from "lucide-react";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { motion } from "framer-motion";
 
@@ -9,7 +9,6 @@ const NAV = [
   { path: "/app/haccp", icon: ShieldCheck, label: "HACCP" },
   { path: "/app/weigh", icon: Weight, label: "Weigh" },
   { path: "/app/byproducts", icon: Package, label: "By-Prod" },
-  { path: "/app/sync", icon: RefreshCw, label: "Sync" },
 ];
 
 function HexagonLogoSmall() {
@@ -23,9 +22,14 @@ function HexagonLogoSmall() {
 }
 
 export function MobileLayout() {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, logout } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
@@ -60,6 +64,7 @@ export function MobileLayout() {
         style={{
           background: 'hsl(216, 68%, 10%)',
           borderTop: '1px solid rgba(255,255,255,0.08)',
+          paddingBottom: 'env(safe-area-inset-bottom)',
         }}
       >
         <div className="flex justify-around h-full items-center">
@@ -84,6 +89,22 @@ export function MobileLayout() {
               </button>
             );
           })}
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="flex flex-col items-center py-2 px-3 transition-colors"
+          >
+            <LogOut
+              className="w-5 h-5"
+              style={{ color: 'rgba(255,255,255,0.4)' }}
+            />
+            <span
+              className="text-[10px] mt-0.5 font-medium"
+              style={{ color: 'rgba(255,255,255,0.4)' }}
+            >
+              Logout
+            </span>
+          </button>
         </div>
       </nav>
     </div>
