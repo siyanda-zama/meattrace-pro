@@ -1,5 +1,4 @@
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 
 const ITEMS = [
   { label: "Hides", unit: "count / kg" },
@@ -10,27 +9,46 @@ const ITEMS = [
 
 const MobileByProducts = () => (
   <div className="space-y-5">
-    <div>
-      <h1 className="text-lg font-bold">By-Product Logger</h1>
-      <p className="text-sm text-muted-foreground">Record by-products for current session</p>
+    {/* Status header */}
+    <div className="flex items-center justify-between">
+      <span className="font-mono text-sm font-medium" style={{ color: 'hsl(42, 64%, 45%)' }}>By-Products</span>
+      <span className="badge-live">Recording</span>
     </div>
+
     <div className="space-y-3">
       {ITEMS.map((item) => (
-        <div key={item.label} className="bg-card rounded-lg p-4 shadow-card space-y-2">
+        <div
+          key={item.label}
+          className="p-4 rounded-xl space-y-2"
+          style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.10)' }}
+        >
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium">{item.label}</span>
-            <span className="text-[10px] text-muted-foreground">{item.unit}</span>
+            <span className="text-sm font-medium text-white">{item.label}</span>
+            <span className="text-[10px]" style={{ color: 'rgba(255,255,255,0.4)' }}>{item.unit}</span>
           </div>
           <div className="flex gap-2">
-            <Input type="number" placeholder="Count" className="h-12 font-mono" />
-            <Input type="number" placeholder="Weight" className="h-12 font-mono" />
+            <Input
+              type="number"
+              placeholder="Count"
+              className="h-12 font-mono border-0"
+              style={{ background: 'rgba(255,255,255,0.05)', color: 'white', borderRadius: 'var(--mt-radius-md)' }}
+            />
+            <Input
+              type="number"
+              placeholder="Weight"
+              className="h-12 font-mono border-0"
+              style={{ background: 'rgba(255,255,255,0.05)', color: 'white', borderRadius: 'var(--mt-radius-md)' }}
+            />
           </div>
         </div>
       ))}
     </div>
-    <Button className="w-full h-12 bg-accent text-accent-foreground hover:bg-accent/90 text-base font-semibold shadow-gold">
+    <button
+      className="w-full h-[52px] rounded-xl text-[15px] font-semibold text-white"
+      style={{ background: 'hsl(42, 64%, 45%)' }}
+    >
       Confirm & Submit
-    </Button>
+    </button>
   </div>
 );
 
